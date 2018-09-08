@@ -8,16 +8,51 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	Joystick joystick;
+	public static boolean firstToggle, secondToggle, thirdToggle, fourthToggle;
 
 	public OI(){
-		joystick = new Joystick(0);
+		joystick = new Joystick(1);
 	}
 	
 	public double getThrottle() {
-		return joystick.getRawAxis(0);
-	}
-	
-	public double getWheel() {
 		return joystick.getRawAxis(1);
 	}
+	
+	public double getWheel()
+	{
+		return 0;
+	}
+	
+	public void getButton()
+	{
+		if(joystick.getRawButtonReleased(6))
+		{
+			firstToggle = true;
+			secondToggle = false;
+			thirdToggle = false;
+			fourthToggle = false;
+		}
+		if(joystick.getRawButtonReleased(7))
+		{
+			firstToggle = false;
+			secondToggle = true;
+			thirdToggle = false;
+			fourthToggle = false;
+		}
+		if(joystick.getRawButtonReleased(11))
+		{
+			firstToggle = false;
+			secondToggle = false;
+			thirdToggle = true;
+			fourthToggle = false;
+		}
+		if(joystick.getRawButtonReleased(10))
+		{
+			firstToggle = false;
+			secondToggle = false;
+			thirdToggle = true;
+			fourthToggle = false;
+		}
+	}
+	
 }

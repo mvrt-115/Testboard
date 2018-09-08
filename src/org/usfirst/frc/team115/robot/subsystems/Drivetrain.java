@@ -12,13 +12,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drivetrain extends Subsystem{
 
-	WPI_TalonSRX first, second, third;
-	WPI_VictorSPX fourth;	
+	WPI_VictorSPX first, second, third, fourth;		
 	
 	public Drivetrain() {
-		first = new WPI_TalonSRX(9);
-		second = new WPI_TalonSRX(4);
-		third = new WPI_TalonSRX(2);
+		first = new WPI_VictorSPX(7);
+		second = new WPI_VictorSPX(1);
+		third = new WPI_VictorSPX(3);
 		fourth = new WPI_VictorSPX(10);
 	}
 	

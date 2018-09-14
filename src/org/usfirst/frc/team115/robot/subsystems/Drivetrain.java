@@ -53,13 +53,13 @@ public class Drivetrain extends Subsystem{
 			}
 			
 			if(Robot.oi.thirdToggle) {
-				third.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
+					third.set(Robot.oi.getThrottle());
+					Robot.oi.getButton();
 			}
 			
 			if(Robot.oi.fourthToggle) {
-				fourth.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
+					fourth.set(Robot.oi.getThrottle());
+					Robot.oi.getButton();
 			}
 		
 		}
@@ -79,6 +79,21 @@ public class Drivetrain extends Subsystem{
 	public WPI_VictorSPX getFirst()
 	{
 		return first;
+	}
+	
+	public WPI_VictorSPX getSecond()
+	{
+		return second;
+	}
+	
+	public WPI_VictorSPX getThird()
+	{
+		return third;
+	}
+	
+	public WPI_VictorSPX getFourth()
+	{
+		return fourth;
 	}
 
 }

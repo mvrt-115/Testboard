@@ -3,6 +3,7 @@ package org.usfirst.frc.team115.robot.subsystems;
 import org.usfirst.frc.team115.robot.Robot;
 import org.usfirst.frc.team115.robot.commands.DriveWithJoystick;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -42,24 +43,58 @@ public class Drivetrain extends Subsystem{
 		if(Robot.oi.joystick.getRawButton(1))
 		{
 			if(Robot.oi.firstToggle) {
+				first.setNeutralMode(NeutralMode.Brake);
+				second.setNeutralMode(NeutralMode.Coast);
+				third.setNeutralMode(NeutralMode.Coast);
+				fourth.setNeutralMode(NeutralMode.Coast);
+				
 				first.set(Robot.oi.getThrottle());
 				Robot.oi.getButton();
 			}
 			
 			if(Robot.oi.secondToggle) {
+				second.setNeutralMode(NeutralMode.Brake);
+				first.setNeutralMode(NeutralMode.Coast);
+				third.setNeutralMode(NeutralMode.Coast);
+				fourth.setNeutralMode(NeutralMode.Coast);
+				
 				second.set(Robot.oi.getThrottle());	
 				Robot.oi.getButton();
 
 			}
 			
 			if(Robot.oi.thirdToggle) {
-					third.set(Robot.oi.getThrottle());
-					Robot.oi.getButton();
+				third.setNeutralMode(NeutralMode.Brake);
+				first.setNeutralMode(NeutralMode.Coast);
+				second.setNeutralMode(NeutralMode.Coast);
+				fourth.setNeutralMode(NeutralMode.Coast);
+				
+				third.set(Robot.oi.getThrottle());
+				Robot.oi.getButton();
 			}
 			
 			if(Robot.oi.fourthToggle) {
-					fourth.set(Robot.oi.getThrottle());
-					Robot.oi.getButton();
+				fourth.setNeutralMode(NeutralMode.Brake);
+				first.setNeutralMode(NeutralMode.Coast);
+				second.setNeutralMode(NeutralMode.Coast);
+				third.setNeutralMode(NeutralMode.Coast);
+				
+				fourth.set(Robot.oi.getThrottle());
+				Robot.oi.getButton();
+			}
+			
+			if(Robot.oi.allFour)
+			{
+				first.setNeutralMode(NeutralMode.Brake);
+				second.setNeutralMode(NeutralMode.Brake);
+				third.setNeutralMode(NeutralMode.Brake);
+				fourth.setNeutralMode(NeutralMode.Brake);
+				
+				first.set(Robot.oi.getThrottle());
+				second.set(Robot.oi.getThrottle());
+				third.set(Robot.oi.getThrottle());
+				fourth.set(Robot.oi.getThrottle());
+				Robot.oi.getButton();
 			}
 		
 		}

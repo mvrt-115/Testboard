@@ -1,6 +1,7 @@
 package org.usfirst.frc.team115.robot.subsystems;
 
 import org.usfirst.frc.team115.robot.Robot;
+import org.usfirst.frc.team115.robot.RobotMap;
 import org.usfirst.frc.team115.robot.commands.DriveWithJoystick;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -16,87 +17,55 @@ public class Drivetrain extends Subsystem{
 	WPI_VictorSPX first, second, third, fourth;	
 	
 	public Drivetrain() {
-		first = new WPI_VictorSPX(7);
-		second = new WPI_VictorSPX(1);
-		third = new WPI_VictorSPX(3);
-		fourth = new WPI_VictorSPX(10);
+		first = new WPI_VictorSPX(RobotMap.firstID);
+		second = new WPI_VictorSPX(RobotMap.secondID);
+		third = new WPI_VictorSPX(RobotMap.thirdID);
+		fourth = new WPI_VictorSPX(RobotMap.fourthID);
 	}
 	
 	public void talonInit()
 	{
-		first.configVoltageCompSaturation(10.5, 50);
+		first.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		first.enableVoltageCompensation(true);
 		
-		second.configVoltageCompSaturation(10.5, 50);
+		second.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		second.enableVoltageCompensation(true);
 		
-		third.configVoltageCompSaturation(10.5, 50);
+		third.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		third.enableVoltageCompensation(true);
 		
-		fourth.configVoltageCompSaturation(10.5, 50);
+		fourth.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		fourth.enableVoltageCompensation(true);	
 	}
 	
 	public void drive() {
-		Robot.oi.getButton();
+		Robot.oi.updateButton(RobotMap.firstButton, Robot.oi.firstTogglePressed, Robot.oi.firstToggleOn);
+		Robot.oi.updateButton(RobotMap.secondButton, Robot.oi.secondTogglePressed, Robot.oi.secondToggleOn);
+		Robot.oi.updateButton(RobotMap.thirdButton, Robot.oi.thirdTogglePressed, Robot.oi.thirdToggleOn);
+		Robot.oi.updateButton(RobotMap.fourthButton, Robot.oi.fourthTogglePressed, Robot.oi.fourthToggleOn);
 		
-		if(Robot.oi.joystick.getRawButton(1))
+		if(Robot.oi.joystick.getRawButton(RobotMap.safetyButton))
 		{
-			if(Robot.oi.firstToggle) {
-				first.setNeutralMode(NeutralMode.Brake);
-				second.setNeutralMode(NeutralMode.Coast);
-				third.setNeutralMode(NeutralMode.Coast);
-				fourth.setNeutralMode(NeutralMode.Coast);
-				
-				first.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
-			}
-			
-			if(Robot.oi.secondToggle) {
-				second.setNeutralMode(NeutralMode.Brake);
-				first.setNeutralMode(NeutralMode.Coast);
-				third.setNeutralMode(NeutralMode.Coast);
-				fourth.setNeutralMode(NeutralMode.Coast);
-				
-				second.set(Robot.oi.getThrottle());	
-				Robot.oi.getButton();
-
-			}
-			
-			if(Robot.oi.thirdToggle) {
-				third.setNeutralMode(NeutralMode.Brake);
-				first.setNeutralMode(NeutralMode.Coast);
-				second.setNeutralMode(NeutralMode.Coast);
-				fourth.setNeutralMode(NeutralMode.Coast);
-				
-				third.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
-			}
-			
-			if(Robot.oi.fourthToggle) {
-				fourth.setNeutralMode(NeutralMode.Brake);
-				first.setNeutralMode(NeutralMode.Coast);
-				second.setNeutralMode(NeutralMode.Coast);
-				third.setNeutralMode(NeutralMode.Coast);
-				
-				fourth.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
-			}
-			
-			if(Robot.oi.allFour)
+			if(Robot.oi.firstToggleOn) 
 			{
-				first.setNeutralMode(NeutralMode.Brake);
-				second.setNeutralMode(NeutralMode.Brake);
-				third.setNeutralMode(NeutralMode.Brake);
-				fourth.setNeutralMode(NeutralMode.Brake);
 				
 				first.set(Robot.oi.getThrottle());
-				second.set(Robot.oi.getThrottle());
-				third.set(Robot.oi.getThrottle());
-				fourth.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
 			}
-		
+			
+			if(Robot.oi.secondToggleOn) 
+			{
+				
+				second.set(Robot.oi.getThrottle());
+			}	
+			
+			if(Robot.oi.thirdToggleOn) {
+				third.set(Robot.oi.getThrottle());
+			}	
+			
+			if(Robot.oi.fourthToggleOn) {
+				
+				second.set(Robot.oi.getThrottle());
+			}	
 		}
 		else
 		{

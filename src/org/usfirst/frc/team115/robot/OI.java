@@ -1,4 +1,6 @@
 package org.usfirst.frc.team115.robot;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -7,10 +9,20 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	public Joystick joystick;
-	public static boolean firstToggle, secondToggle, thirdToggle, fourthToggle, allFour;
-
-	public OI(){
+	public static boolean firstToggleOn, firstTogglePressed, secondToggleOn, secondTogglePressed, thirdToggleOn, thirdTogglePressed, fourthToggleOn, fourthTogglePressed, allFour;
+	
+	public OI()
+	{
 		joystick = new Joystick(1);
+		firstToggleOn = false;
+		firstTogglePressed = false;
+		secondToggleOn = false;
+		secondTogglePressed = false;
+		thirdToggleOn = false;
+		thirdTogglePressed = false;
+		fourthToggleOn = false;
+		fourthTogglePressed = false;
+		allFour = false;
 	}
 	
 	public double getThrottle() {
@@ -22,52 +34,17 @@ public class OI {
 		return 0;
 	}
 	
-	public void getButton()
-	{
-		if(joystick.getRawButtonReleased(3))
+	public void updateButton(int button, boolean buttonTogglePressed, boolean buttonToggleOn)
+	{		
+		if(joystick.getRawButtonReleased(button))
 		{
-			allFour = true;
-			firstToggle = false;
-			secondToggle = false;
-			thirdToggle = false;
-			fourthToggle = false;
+			if(!buttonTogglePressed) {
+				buttonToggleOn = !buttonToggleOn;
+				buttonTogglePressed = true;
+			}
+			else
+				buttonTogglePressed = false;
 		}
 		
-		if(joystick.getRawButtonReleased(6))
-		{
-			firstToggle = true;
-			secondToggle = false;
-			thirdToggle = false;
-			fourthToggle = false;
-			allFour = false;
-		}
-		
-		if(joystick.getRawButtonReleased(11))
-		{
-			thirdToggle = true;
-			firstToggle = false;
-			secondToggle = false;
-			fourthToggle = false;
-			allFour = false;
-		}
-		
-		if(joystick.getRawButtonReleased(10))
-		{
-			fourthToggle = true;
-			firstToggle = false;
-			secondToggle = false;
-			thirdToggle = false;
-			allFour = false;
-		}
-		
-		if(joystick.getRawButtonReleased(7))
-		{
-			secondToggle = true;
-			firstToggle = false;
-			thirdToggle = false;
-			fourthToggle = false;
-			allFour = false;
-		}
 	}
-	
 }

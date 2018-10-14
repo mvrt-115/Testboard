@@ -9,20 +9,15 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	public Joystick joystick;
-	public static boolean firstToggleOn, firstTogglePressed, secondToggleOn, secondTogglePressed, thirdToggleOn, thirdTogglePressed, fourthToggleOn, fourthTogglePressed, allFour;
+	public static int firstCounter, secondCounter, thirdCounter, fourthCounter;
 	
 	public OI()
 	{
 		joystick = new Joystick(1);
-		firstToggleOn = false;
-		firstTogglePressed = false;
-		secondToggleOn = false;
-		secondTogglePressed = false;
-		thirdToggleOn = false;
-		thirdTogglePressed = false;
-		fourthToggleOn = false;
-		fourthTogglePressed = false;
-		allFour = false;
+		firstCounter = 0;
+		secondCounter = 0;
+		thirdCounter = 0;
+		fourthCounter = 0;
 	}
 	
 	public double getThrottle() {
@@ -34,17 +29,26 @@ public class OI {
 		return 0;
 	}
 	
-	public void updateButton(int button, boolean buttonTogglePressed, boolean buttonToggleOn)
+	public void updateButton()
 	{		
-		if(joystick.getRawButtonReleased(button))
+		if(joystick.getRawButtonReleased(RobotMap.firstButton))
 		{
-			if(!buttonTogglePressed) {
-				buttonToggleOn = !buttonToggleOn;
-				buttonTogglePressed = true;
-			}
-			else
-				buttonTogglePressed = false;
+			firstCounter++;
 		}
 		
-	}
+		if(joystick.getRawButtonReleased(RobotMap.secondButton))
+		{
+			secondCounter++;
+		}
+		
+		if(joystick.getRawButtonReleased(RobotMap.thirdButton))
+		{
+			thirdCounter++;
+		}
+		
+		if(joystick.getRawButtonReleased(RobotMap.fourthButton))
+		{
+			fourthCounter++;
+		}
+	}	
 }

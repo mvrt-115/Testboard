@@ -1,6 +1,7 @@
 package org.usfirst.frc.team115.robot.subsystems;
 
 import org.usfirst.frc.team115.robot.Robot;
+import org.usfirst.frc.team115.robot.RobotMap;
 import org.usfirst.frc.team115.robot.commands.DriveWithJoystick;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -16,87 +17,96 @@ public class Drivetrain extends Subsystem{
 	WPI_VictorSPX first, second, third, fourth;	
 	
 	public Drivetrain() {
-		first = new WPI_VictorSPX(7);
-		second = new WPI_VictorSPX(1);
-		third = new WPI_VictorSPX(3);
-		fourth = new WPI_VictorSPX(10);
+		first = new WPI_VictorSPX(RobotMap.firstID);
+		second = new WPI_VictorSPX(RobotMap.secondID);
+		third = new WPI_VictorSPX(RobotMap.thirdID);
+		fourth = new WPI_VictorSPX(RobotMap.fourthID);
 	}
 	
 	public void talonInit()
 	{
-		first.configVoltageCompSaturation(10.5, 50);
+		first.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		first.enableVoltageCompensation(true);
 		
-		second.configVoltageCompSaturation(10.5, 50);
+		second.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		second.enableVoltageCompensation(true);
 		
-		third.configVoltageCompSaturation(10.5, 50);
+		third.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		third.enableVoltageCompensation(true);
 		
-		fourth.configVoltageCompSaturation(10.5, 50);
+		fourth.configVoltageCompSaturation(RobotMap.voltage, RobotMap.timeOut);
 		fourth.enableVoltageCompensation(true);	
 	}
 	
-	public void drive() {
-		Robot.oi.getButton();
-		
-		if(Robot.oi.joystick.getRawButton(1))
+	public void changeNeutralMode()
+	{
+		if(Robot.oi.firstCounter % 2 == 1)
 		{
-			if(Robot.oi.firstToggle) {
-				first.setNeutralMode(NeutralMode.Brake);
-				second.setNeutralMode(NeutralMode.Coast);
-				third.setNeutralMode(NeutralMode.Coast);
-				fourth.setNeutralMode(NeutralMode.Coast);
-				
-				first.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
-			}
-			
-			if(Robot.oi.secondToggle) {
-				second.setNeutralMode(NeutralMode.Brake);
-				first.setNeutralMode(NeutralMode.Coast);
-				third.setNeutralMode(NeutralMode.Coast);
-				fourth.setNeutralMode(NeutralMode.Coast);
-				
-				second.set(Robot.oi.getThrottle());	
-				Robot.oi.getButton();
-
-			}
-			
-			if(Robot.oi.thirdToggle) {
-				third.setNeutralMode(NeutralMode.Brake);
-				first.setNeutralMode(NeutralMode.Coast);
-				second.setNeutralMode(NeutralMode.Coast);
-				fourth.setNeutralMode(NeutralMode.Coast);
-				
-				third.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
-			}
-			
-			if(Robot.oi.fourthToggle) {
-				fourth.setNeutralMode(NeutralMode.Brake);
-				first.setNeutralMode(NeutralMode.Coast);
-				second.setNeutralMode(NeutralMode.Coast);
-				third.setNeutralMode(NeutralMode.Coast);
-				
-				fourth.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
-			}
-			
-			if(Robot.oi.allFour)
-			{
-				first.setNeutralMode(NeutralMode.Brake);
-				second.setNeutralMode(NeutralMode.Brake);
-				third.setNeutralMode(NeutralMode.Brake);
-				fourth.setNeutralMode(NeutralMode.Brake);
-				
-				first.set(Robot.oi.getThrottle());
-				second.set(Robot.oi.getThrottle());
-				third.set(Robot.oi.getThrottle());
-				fourth.set(Robot.oi.getThrottle());
-				Robot.oi.getButton();
-			}
+			first.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			first.setNeutralMode(NeutralMode.Coast);
+		}
 		
+		if(Robot.oi.secondCounter % 2 == 1)
+		{
+			second.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			second.setNeutralMode(NeutralMode.Coast);
+		}
+		
+		if(Robot.oi.thirdCounter % 2 == 1)
+		{
+			third.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			third.setNeutralMode(NeutralMode.Coast);
+		}
+		
+		if(Robot.oi.fourthCounter % 2 == 1)
+		{
+			fourth.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			fourth.setNeutralMode(NeutralMode.Coast);
+		}
+		
+	}
+	
+	public void drive() {
+		changeNeutralMode();
+		if(Robot.oi.joystick.getRawButton(RobotMap.safetyButton))
+		{
+			if(Robot.oi.firstCounter % 2 == 1) 
+			{
+				first.set(Robot.oi.getThrottle());
+			}
+			else
+				first.set(0);
+			
+			if(Robot.oi.secondCounter % 2 == 1) 
+			{
+				second.set(Robot.oi.getThrottle());
+			}
+			else
+				second.set(0);
+			
+			if(Robot.oi.thirdCounter % 2 == 1) {
+				third.set(Robot.oi.getThrottle());
+			}	
+			else
+				third.set(0);
+			
+			if(Robot.oi.fourthCounter % 2 == 1) {
+				fourth.set(Robot.oi.getThrottle());
+			}
+			else
+				fourth.set(0);
 		}
 		else
 		{
@@ -105,6 +115,7 @@ public class Drivetrain extends Subsystem{
 			third.set(0);
 			fourth.set(0);
 		}
+
 	}
 	
 	protected void initDefaultCommand() {

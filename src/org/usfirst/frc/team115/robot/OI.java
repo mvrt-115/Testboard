@@ -1,4 +1,6 @@
 package org.usfirst.frc.team115.robot;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -7,10 +9,15 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	public Joystick joystick;
-	public static boolean firstToggle, secondToggle, thirdToggle, fourthToggle, allFour;
-
-	public OI(){
+	public static int firstCounter, secondCounter, thirdCounter, fourthCounter;
+	
+	public OI()
+	{
 		joystick = new Joystick(1);
+		firstCounter = 0;
+		secondCounter = 0;
+		thirdCounter = 0;
+		fourthCounter = 0;
 	}
 	
 	public double getThrottle() {
@@ -22,52 +29,26 @@ public class OI {
 		return 0;
 	}
 	
-	public void getButton()
-	{
-		if(joystick.getRawButtonReleased(3))
+	public void updateButton()
+	{		
+		if(joystick.getRawButtonReleased(RobotMap.firstButton))
 		{
-			allFour = true;
-			firstToggle = false;
-			secondToggle = false;
-			thirdToggle = false;
-			fourthToggle = false;
+			firstCounter++;
 		}
 		
-		if(joystick.getRawButtonReleased(6))
+		if(joystick.getRawButtonReleased(RobotMap.secondButton))
 		{
-			firstToggle = true;
-			secondToggle = false;
-			thirdToggle = false;
-			fourthToggle = false;
-			allFour = false;
+			secondCounter++;
 		}
 		
-		if(joystick.getRawButtonReleased(11))
+		if(joystick.getRawButtonReleased(RobotMap.thirdButton))
 		{
-			thirdToggle = true;
-			firstToggle = false;
-			secondToggle = false;
-			fourthToggle = false;
-			allFour = false;
+			thirdCounter++;
 		}
 		
-		if(joystick.getRawButtonReleased(10))
+		if(joystick.getRawButtonReleased(RobotMap.fourthButton))
 		{
-			fourthToggle = true;
-			firstToggle = false;
-			secondToggle = false;
-			thirdToggle = false;
-			allFour = false;
+			fourthCounter++;
 		}
-		
-		if(joystick.getRawButtonReleased(7))
-		{
-			secondToggle = true;
-			firstToggle = false;
-			thirdToggle = false;
-			fourthToggle = false;
-			allFour = false;
-		}
-	}
-	
+	}	
 }

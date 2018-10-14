@@ -38,34 +38,75 @@ public class Drivetrain extends Subsystem{
 		fourth.enableVoltageCompensation(true);	
 	}
 	
-	public void drive() {
-		Robot.oi.updateButton(RobotMap.firstButton, Robot.oi.firstTogglePressed, Robot.oi.firstToggleOn);
-		Robot.oi.updateButton(RobotMap.secondButton, Robot.oi.secondTogglePressed, Robot.oi.secondToggleOn);
-		Robot.oi.updateButton(RobotMap.thirdButton, Robot.oi.thirdTogglePressed, Robot.oi.thirdToggleOn);
-		Robot.oi.updateButton(RobotMap.fourthButton, Robot.oi.fourthTogglePressed, Robot.oi.fourthToggleOn);
+	public void changeNeutralMode()
+	{
+		if(Robot.oi.firstCounter % 2 == 1)
+		{
+			first.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			first.setNeutralMode(NeutralMode.Coast);
+		}
 		
+		if(Robot.oi.secondCounter % 2 == 1)
+		{
+			second.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			second.setNeutralMode(NeutralMode.Coast);
+		}
+		
+		if(Robot.oi.thirdCounter % 2 == 1)
+		{
+			third.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			third.setNeutralMode(NeutralMode.Coast);
+		}
+		
+		if(Robot.oi.fourthCounter % 2 == 1)
+		{
+			fourth.setNeutralMode(NeutralMode.Brake);
+		}
+		else
+		{
+			fourth.setNeutralMode(NeutralMode.Coast);
+		}
+		
+	}
+	
+	public void drive() {
+		changeNeutralMode();
 		if(Robot.oi.joystick.getRawButton(RobotMap.safetyButton))
 		{
-			if(Robot.oi.firstToggleOn) 
+			if(Robot.oi.firstCounter % 2 == 1) 
 			{
-				
 				first.set(Robot.oi.getThrottle());
 			}
+			else
+				first.set(0);
 			
-			if(Robot.oi.secondToggleOn) 
+			if(Robot.oi.secondCounter % 2 == 1) 
 			{
-				
 				second.set(Robot.oi.getThrottle());
-			}	
+			}
+			else
+				second.set(0);
 			
-			if(Robot.oi.thirdToggleOn) {
+			if(Robot.oi.thirdCounter % 2 == 1) {
 				third.set(Robot.oi.getThrottle());
 			}	
+			else
+				third.set(0);
 			
-			if(Robot.oi.fourthToggleOn) {
-				
-				second.set(Robot.oi.getThrottle());
-			}	
+			if(Robot.oi.fourthCounter % 2 == 1) {
+				fourth.set(Robot.oi.getThrottle());
+			}
+			else
+				fourth.set(0);
 		}
 		else
 		{
@@ -74,6 +115,7 @@ public class Drivetrain extends Subsystem{
 			third.set(0);
 			fourth.set(0);
 		}
+
 	}
 	
 	protected void initDefaultCommand() {

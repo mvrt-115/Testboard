@@ -103,6 +103,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		Robot.oi.updateButton();
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("voltageOut 1", drivetrain.getFirst().getMotorOutputVoltage());
 		SmartDashboard.putNumber("voltageOut 2", drivetrain.getSecond().getMotorOutputVoltage());
